@@ -19,17 +19,38 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "List of Films"
+        setUpTableView()
+        setupDatas()
+    }
+    
+    func setUpTableView() {
         // ❗️"self" of this code means ViewController
         tableView.dataSource = self
+        tableView.delegate = self
+
         // cell's height in tableView
         tableView.rowHeight = 120
+    }
+    
+    func setupDatas() {
         
-        tableView.delegate = self
-        
+        // it can be required by server side (if there's is one)
         movieDataManager.makeMovieData()
+        
+        // Receive datas
         //movieArray = movieDataManager.getMovieData()
         movieDataManager.movieDataArray
     }
+    
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        
+        movieDataManager.updateMovieData()
+        tableView.reloadData()
+        
+    }
+    
 
 }
 
@@ -38,6 +59,7 @@ extension ViewController: UITableViewDataSource {
     // - How many contents that Table View should obtain?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(#function)
+        
         return movieDataManager.getMovieData().count
     }
     
@@ -46,6 +68,7 @@ extension ViewController: UITableViewDataSource {
     // This method draw TableView's Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print(#function)
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
         let movie = movieDataManager.getMovieData()[indexPath.row]

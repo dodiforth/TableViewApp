@@ -29,4 +29,9 @@ class DataManager {
         return movieDataArray
     }
     
+    func updateMovieData() {
+        let movie = Movie(movieImage: UIImage(named: "marvel"), movieName: "An upcoming", movieDescription: "Lorem UPsum")
+        movieDataArray.append(movie)
+    }
+    
 }
